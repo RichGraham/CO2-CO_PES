@@ -26,11 +26,14 @@ program GP
   integer :: nGrid=678 ! This is the raw size of the grid data
   integer i,nRMSE,j
   double precision :: dum, RMSE
+  character (len=90) :: filename
 
   allocate (alpha(nTraining), lScale(nDim), xTraining(nDim,nTraining),xTrainingPerm(nDim,nTraining), xStar(nDim))
   allocate (gridData(nDim+1,nGrid))
 
   !====Load hyperparameters====
+  write (filename, '( "N", I1, "/HyperParams_Symm.dat" )' )  nTraining
+  print *, filename
   open (unit = 7, file = "../HyperParams_Symm.dat")
   !Only need to read some as others are tied.
   read (7,*) lScale(4), lScale(3), lScale(2), lScale(1),expVar,NuggVar
