@@ -36,8 +36,8 @@ program GP
   double precision, allocatable::  xStar(:)
   double precision, allocatable::  gridData(:,:)
   integer :: nGrid=678 ! This is the raw size of the grid data
-  integer i,nRMSE,j
-  double precision :: dum, RMSE
+  integer i,j
+  double precision :: dum
   character (len=90) :: filename
 
   allocate (alpha(nTraining), lScale(nDim), xTraining(nDim,nTraining),xTrainingPerm(nDim,nTraining), xStar(nDim))
