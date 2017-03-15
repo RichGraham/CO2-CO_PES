@@ -44,11 +44,8 @@ rco=2.132d0
 ! Bond length of CO2, NB, Bohr
 rco2=2.198d0
 
-
-!
 call load_GP_Data
 call fixedAngleSlice(rco2,rco)
-
 
 end
 !
@@ -59,17 +56,9 @@ subroutine fixedAngleSlice( rco2, rco)
   double precision rco2, rco,rab(6)
   integer i, itot
   double precision  r, tha, thb, ph, e, e_GP, asymp, PES,AngToBohr
-
-
   AngToBohr= 1.8897259885789
-
-  write(6,*), rco2/AngToBohr, rco/AngToBohr
-  
-  itot=1
-  !itot=1
-  
-  
-
+    
+  itot=300
   tha =  3.14159265359/2.0
   thb =  3.14159265359
   ph =  0.0
@@ -79,7 +68,7 @@ subroutine fixedAngleSlice( rco2, rco)
   do i=0, itot
 
      ! specify centre-to-centre separation in Bohr
-     r = (  4.5 + 50.0*i/(1.0*itot) )
+     r = (  2.4 + 50.0*i/(1.0*itot) ) * AngToBohr
 
      call computeDistances(r,tha,thb,ph,rab, rco2, rco)
      
@@ -89,7 +78,7 @@ subroutine fixedAngleSlice( rco2, rco)
      write(15,*) r/AngToBohr , e , e_GP
      
   enddo
-
+  write(6,*)'Written to file: PES_Out.dat '
   close(15)
 
 end subroutine fixedAngleSlice
@@ -139,12 +128,6 @@ subroutine computeDistances(r,tha,thb, ph, rab,rco2,rco)
    cb(:,2)=centb(:)+rco*axisb(:)/2d0 ! C'
    
 
-   write (6,*), 'C1 (',ca(1,1),ca(2,1),ca(3,1),')'
-   write (6,*), 'O1 (',ca(1,2),ca(2,2),ca(3,2),')'
-   write (6,*), 'O2 (',ca(1,3),ca(2,3),ca(3,3),')'
-   write (6,*),' '
-   write (6,*), 'C2 (',cb(1,2),cb(2,2),cb(3,2),')'
-   write (6,*), 'O3 (',cb(1,1),cb(2,1),cb(3,1),')'
    
    !Compute interatomic distances
    ! Work out the interatomic distances CO', CC', OO', OC', O-O', O-C'
@@ -162,15 +145,7 @@ subroutine computeDistances(r,tha,thb, ph, rab,rco2,rco)
       end do
    end do
 
-   write (6,*)' '
-   write (6,*)'r     =', r /AngToBohr
-   write (6,*)'C1-O3 =',rab(1)/AngToBohr
-   write (6,*)'C1-C2 =',rab(2)/AngToBohr
-   write (6,*)'O1-O3 =',rab(3)/AngToBohr
-   write (6,*)'O1-C2 =',rab(4)/AngToBohr
-   write (6,*)'O2-O3 =',rab(5)/AngToBohr
-   write (6,*)'O2-C2 =',rab(6)/AngToBohr
-
+   
    
 end subroutine
 
