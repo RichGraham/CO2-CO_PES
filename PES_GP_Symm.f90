@@ -12,16 +12,6 @@ module PES_details
   end interface PES_GP
 end module PES_details
 
-module RMSE_details 
-  interface RMSE_Calc
-     function RMSE_Calc( gridData, nGrid)
-       implicit none 
-       double precision:: RMSE_Calc
-       double precision, dimension(:,:) ::  gridData
-       integer :: nGrid
-     end function RMSE_Calc
-  end interface RMSE_Calc
-end module RMSE_details
 
 module GP_variables
   double precision, allocatable :: alpha (:), lScale(:), xTraining(:,:), xTrainingPerm(:,:)
@@ -278,18 +268,14 @@ end
 subroutine load_GP_Data
   use GP_variables
   use PES_details
-  use RMSE_details
   implicit none
   
   double precision, allocatable::  xStar(:)
-  double precision, allocatable::  gridData(:,:)
-  integer :: nGrid=678 ! This is the raw size of the grid data
   integer i,j
   double precision :: dum
   character (len=90) :: filename
 
   allocate (alpha(nTraining), lScale(nDim), xTraining(nDim,nTraining),xTrainingPerm(nDim,nTraining), xStar(nDim))
-  allocate (gridData(nDim+1,nGrid))
 
   !====Load hyperparameters====
   write (filename, '( "N", I4.4, "/HyperParams_Symm.dat" )' )  nTraining
