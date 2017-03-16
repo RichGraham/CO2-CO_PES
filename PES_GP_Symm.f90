@@ -58,7 +58,7 @@ subroutine fixedAngleSlice( rco2, rco)
   double precision  r, tha, thb, ph, e, e_GP, asymp, PES,AngToBohr
   AngToBohr= 1.8897259885789
     
-  itot=300
+  itot=500
   tha =  3.14159265359/2.0
   thb =  3.14159265359
   ph =  0.0
@@ -68,14 +68,14 @@ subroutine fixedAngleSlice( rco2, rco)
   do i=0, itot
 
      ! specify centre-to-centre separation in Bohr
-     r = (  2.4 + 50.0*i/(1.0*itot) ) * AngToBohr
+     r = (  2.4 + 9.0*i/(1.0*itot) ) * AngToBohr
 
      call computeDistances(r,tha,thb,ph,rab, rco2, rco)
      
      
      e=PES( rab, rco2, rco)
      !e_GP = PES_GP( xStar)
-     write(15,*) r/AngToBohr , e , e_GP
+     write(15,*) r/AngToBohr , e 
      
   enddo
   write(6,*)'Written to file: PES_Out.dat '
